@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: menma-shop
+    env: docker
+    plan: free
+    dockerfilePath: Dockerfile
+    envVars:
+      - key: DB_DRIVER
+        value: pgsql
+      - key: DB_HOST
+        value: <your-db-host>
+      - key: DB_PORT
+        value: "5432"
+      - key: DB_NAME
+        value: boutique_db
+      - key: DB_USER
+        value: <db-user>
+      - key: DB_PASS
+        value: <db-pass>
+      - key: APP_ENV
+        value: production
