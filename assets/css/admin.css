@@ -1,39 +1,119 @@
-/* --- GARDER TON CSS EXISTANT ET AJOUTER/MODIFIER CECI --- */
+/* ==========================================================================
+   OPTIMISATION MOBILE FINALE (Smartphone & Tablette)
+   ========================================================================== */
 
-/* 1. Amélioration globale de l'accessibilité tactile */
-input, select, textarea, .btn-save, .btn-edit, .btn-delete, .menu-admin a {
-    min-height: 48px; /* Taille recommandée par Google pour le tactile */
+/* 1. Amélioration globale du confort tactile */
+input, select, textarea, .btn, .btn-save, .btn-edit, .btn-delete, .menu-admin a, .btn-whatsapp {
+    min-height: 48px !important; /* Taille cible pour les doigts selon Google */
+    font-size: 16px !important;  /* Empêche le zoom auto forcé sur iPhone */
 }
 
-/* 2. Adaptation Mobile Spécifique */
 @media (max-width: 768px) {
-    /* Navigation plus spacieuse */
-    .nav-admin {
-        height: auto;
-        padding: 15px;
-        flex-direction: column;
-        gap: 15px;
+    /* 2. Navigation et En-tête */
+    nav, .nav-admin, .admin-nav, .dashboard-header {
+        flex-direction: column !important;
+        height: auto !important;
+        padding: 15px !important;
+        gap: 15px !important;
+        text-align: center;
     }
 
-    .menu-admin {
+    nav ul, .menu-admin, .admin-menu {
         width: 100%;
-        justify-content: space-around;
-        padding-bottom: 5px;
-    }
-
-    /* Grille de statistiques : 2 par ligne sur mobile */
-    .stats-grid {
-        grid-template-columns: 1fr 1fr;
+        justify-content: space-around !important;
+        padding: 0;
         gap: 10px;
     }
 
-    .stat-value {
-        font-size: 1.4rem;
+    /* 3. Transformation des Tableaux en Cartes (L'élément crucial) */
+    table, thead, tbody, th, td, tr {
+        display: block !important;
+        width: 100% !important;
     }
 
-    /* TRANSFORMATION DU TABLEAU EN CARTES (Le point clé) */
-    table, thead, tbody, th, td, tr {
-        display: block;
+    thead, .table-head {
+        display: none !important; /* Cache les entêtes de colonnes */
+    }
+
+    tr {
+        margin-bottom: 20px !important;
+        border: 1px solid #ddd !important;
+        border-radius: 12px !important;
+        background: #fff !important;
+        padding: 15px !important;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.05) !important;
+    }
+
+    td {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 12px 0 !important;
+        border-bottom: 1px solid #f0f0f0 !important;
+        text-align: right;
+    }
+
+    /* Style si tu n'as pas de data-label : on met en avant la première cellule */
+    td:first-child {
+        font-weight: bold;
+        font-size: 1.1rem;
+        color: #2c3e50;
+    }
+
+    /* Actions (Modifier/Supprimer) en bas de carte */
+    td:last-child {
+        border-bottom: none !important;
+        justify-content: center !important;
+        gap: 25px !important;
+        padding-top: 20px !important;
+        background: #fafafa;
+        margin: 10px -15px -15px -15px;
+        border-radius: 0 0 12px 12px;
+    }
+
+    /* 4. Boutons d'action géants */
+    .btn-edit, .btn-delete {
+        font-size: 1.8rem !important; /* Très visible pour le pouce */
+        padding: 12px 25px !important;
+        background: #fff !important;
+        border: 1px solid #eee !important;
+        border-radius: 10px !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    /* 5. Grilles et Formulaires */
+    .stats-grid, .product-grid, .form-row, .form-group-row, .top-grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+
+    .stat-card {
+        padding: 20px !important;
+    }
+
+    .edit-container, .admin-wrapper, .container {
+        padding: 10px !important;
+        width: 100% !important;
+        margin: 0 auto !important;
+    }
+
+    /* 6. Boutons de validation larges */
+    .btn-save, .btn-new-product, .btn-whatsapp {
+        width: 100% !important;
+        padding: 20px !important;
+        font-size: 1.2rem !important;
+        border-radius: 12px !important;
+    }
+
+    /* 7. Détails Produit */
+    .main-image, #media-display {
+        height: 280px !important;
+    }
+    
+    .product-detail-layout {
+        gap: 20px !important;
+    }
+}
         width: 100%;
     }
 
