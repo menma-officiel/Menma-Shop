@@ -31,3 +31,5 @@ Ce dépôt contient une petite boutique PHP. Cette configuration prépare le pro
 
 - Les prix sont affichés en FGn (Franc guinéen) sans décimales ; les valeurs envoyées par les formulaires admin sont arrondies à l'entier le plus proche.
 
+- PWA: le tableau de bord d'administration possède un `manifest.json`, un `service-worker.js` et une page `offline.html` pour un mode hors-ligne basique. Le service worker est enregistré depuis `includes/footer_admin.php`.
+
