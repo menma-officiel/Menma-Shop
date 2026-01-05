@@ -35,7 +35,7 @@ $top_ventes = $pdo->query("
         </div>
         <div class="stat-card">
             <h3 class="stat-title">Revenus Totaux</h3>
-            <p class="stat-value stat-green"><?= number_format($stats['chiffre_affaires'] ?? 0, 2) ?> FGn</p>
+            <p class="stat-value stat-green"><?= number_format($stats['chiffre_affaires'] ?? 0, 0) ?> FGn</p>
         </div>
     </div>
 

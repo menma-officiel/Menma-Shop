@@ -29,3 +29,5 @@ Ce dépôt contient une petite boutique PHP. Cette configuration prépare le pro
 
   Le mot de passe sera haché automatiquement.
 
+- Les prix sont affichés en FGn (Franc guinéen) sans décimales ; les valeurs envoyées par les formulaires admin sont arrondies à l'entier le plus proche.
+

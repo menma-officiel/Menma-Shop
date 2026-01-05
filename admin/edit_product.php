@@ -11,8 +11,9 @@ include __DIR__ . '/../includes/header_admin.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nom = $_POST['nom'];
-    $prix = $_POST['prix'];
-    $stock = $_POST['stock'];
+    // Arrondir le prix pour correspondre au FGn sans décimales
+    $prix = (int) round(floatval($_POST['prix']));
+    $stock = (int) $_POST['stock'];
     $desc = $_POST['description'];
     $img1 = $_POST['image_url'];
     $img2 = !empty($_POST['image_url2']) ? $_POST['image_url2'] : null;
@@ -43,8 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <div class="form-group-row">
             <div>
-                <label>Prix (FGn ou GNF)</label>
-                <input type="number" step="0.01" name="prix" placeholder="0.00" required>
+                <label>Prix (FGn)</label>
+                <input type="number" step="1" name="prix" placeholder="0" required>
             </div>
             <div>
                 <label>Quantité en Stock</label>

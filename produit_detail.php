@@ -37,7 +37,7 @@ if (!$p) {
         <div class="product-info">
             <span class="badge-shipping">Livraison Gratuite</span>
             <h1 class="product-title"><?= htmlspecialchars($p['nom']) ?></h1>
-            <p class="price-big"><?= number_format($p['prix'], 2) ?> FGn</p>
+            <p class="price-big"><?= number_format($p['prix'], 0) ?> FGn</p>
             
             <div class="product-details">
                 <h3>Détails du produit</h3>

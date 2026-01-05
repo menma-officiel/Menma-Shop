@@ -42,7 +42,7 @@ $query->execute();
                 
                 <div class="product-content">
                     <h3><?= htmlspecialchars($p['nom']) ?></h3>
-                    <p class="product-price"><?= number_format($p['prix'], 2) ?> FGn</p>
+                    <p class="product-price"><?= number_format($p['prix'], 0) ?> FGn</p>
                     <p class="shipping-info">✅ Livraison Gratuite</p>
                     
                     <div class="product-footer">

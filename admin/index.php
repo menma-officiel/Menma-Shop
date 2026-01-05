@@ -37,7 +37,7 @@ include __DIR__ . '/../includes/header_admin.php';
         </div>
         <div class="stat-card">
             <h4 class="stat-title">Chiffre d'affaires</h4>
-            <p class="stat-value stat-green"><?php echo number_format($revenue, 2); ?> FGn</p>
+            <p class="stat-value stat-green"><?php echo number_format($revenue, 0); ?> FGn</p>
         </div>
     </div>
 
@@ -62,7 +62,7 @@ include __DIR__ . '/../includes/header_admin.php';
                     ?>
                     <tr>
                         <td><strong><?php echo $nom; ?></strong></td>
-                        <td class="price"><strong><?php echo $prod['prix']; ?></strong></td>
+                        <td class="price"><strong><?php echo number_format($prod['prix'], 0); ?> FGn</strong></td>
                         <td class="text-center"><?php echo $prod['stock']; ?></td>
                         <td class="text-right">
                             <a href="edit_product.php?id=<?php echo $prod['id']; ?>" class="btn-edit"><i class="fas fa-edit"></i></a>
