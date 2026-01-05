@@ -1,77 +1,201 @@
-/* 1. RESET ET BASE */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Segoe UI', Roboto, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; -webkit-tap-highlight-color: transparent; }
-
-/* 2. NAVIGATION (Optimisée Mobile) */
-.nav-admin { 
-    display: flex; justify-content: space-between; align-items: center; 
-    background: #1a1a1a; padding: 0 20px; min-height: 65px; color: white; 
-    position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+/* Styles pour la page admin/login.php */
+.login-page-body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #2c3e50, #000000);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 30px;
 }
 
-.logo { font-weight: 800; font-size: 1.2rem; color: #fff; text-decoration: none; text-transform: uppercase; }
-.logo span { color: #25D366; }
-
-.menu-admin { display: flex; gap: 20px; align-items: center; }
-/* Grosses icônes pour le pouce */
-.menu-admin a { color: #ccc; text-decoration: none; font-size: 1.5rem; padding: 10px; display: inline-block; }
-
-/* 3. LAYOUT PRINCIPAL */
-.admin-wrapper { max-width: 1000px; margin: 20px auto; padding: 0 15px; }
-.edit-container { background: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px; }
-
-/* 4. STATISTIQUES (Grille responsive) */
-.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 25px; }
-.stat-card { background: white; padding: 15px; border-radius: 10px; border: 1px solid #eee; text-align: center; }
-.stat-value { font-size: 1.5rem; font-weight: bold; display: block; }
-
-/* 5. FORMULAIRES (Champs larges pour mobile) */
-.admin-form label { display: block; margin: 15px 0 6px; font-weight: 700; font-size: 0.9rem; }
-.admin-form input, .admin-form textarea, .admin-form select { 
-    width: 100%; padding: 14px; border: 1px solid #d1d5db; border-radius: 10px; font-size: 1rem; min-height: 48px;
+.login-card {
+    background: rgba(23, 34, 57, 0.65);
+    backdrop-filter: blur(8px);
+    padding: 36px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
 }
 
-/* 6. TABLEAUX TRANSFORMÉS EN CARTES (MOBILE FIRST) */
-.table-responsive { width: 100%; }
-table { width: 100%; border-collapse: collapse; }
+.login-card h2 {
+    margin-bottom: 18px;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.field {
+    margin: 12px 0;
+    text-align: left;
+}
+
+label {
+    display: block;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #222;
+    outline: none;
+    font-size: 0.95rem;
+}
+
+button.login-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #e74c3c;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-top: 8px;
+}
+
+button.login-btn:hover {
+    background: #c0392b;
+    transform: translateY(-1px);
+}
+
+.error {
+    color: #ffb3b3;
+    font-size: 0.95rem;
+    margin-top: 14px;
+}
+
+.back-home {
+    margin-top: 18px;
+    display: block;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    font-size: 0.85rem;
+}
+
+/* petit utilitaire pour message de validation côté client */
+.input-error {
+    border: 1px solid #ffb3b3 !important;
+    box-shadow: 0 0 0 3px rgba(255, 179, 179, 0.08);
+}
 
 @media (max-width: 768px) {
-    .nav-admin { flex-direction: row; padding: 10px 15px; }
-    .dashboard-header { flex-direction: column; gap: 15px; text-align: center; }
-    .btn-new-product { width: 100%; text-align: center; }
+    .nav-admin {
+        flex-direction: row;
+        padding: 10px 15px;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .btn-new-product {
+        width: 100%;
+        text-align: center;
+    }
 
     /* Le tableau devient une liste de cartes */
-    thead { display: none; }
-    tr { 
-        display: block; background: #fff; border: 1px solid #e1e4e8; 
-        padding: 10px; margin-bottom: 15px; border-radius: 12px;
+    thead {
+        display: none;
     }
-    td { 
-        display: flex; justify-content: space-between; align-items: center; 
-        padding: 12px 5px; border-bottom: 1px solid #f0f0f0; font-size: 0.95rem;
+
+    tr {
+        display: block;
+        background: #fff;
+        border: 1px solid #e1e4e8;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 12px;
     }
-    td:last-child { border-bottom: none; justify-content: space-around; padding-top: 15px; }
-    
+
+    td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 5px;
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 0.95rem;
+    }
+
+    td:last-child {
+        border-bottom: none;
+        justify-content: space-around;
+        padding-top: 15px;
+    }
+
     /* On utilise data-label pour afficher le titre sur mobile */
-    td::before { content: attr(data-label); font-weight: bold; color: #777; }
+    td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: #777;
+    }
 
     /* Boutons d'action géants pour éviter les erreurs de clic */
-    .btn-edit, .btn-delete { 
-        background: #f8f9fa; padding: 12px 25px; border-radius: 8px; 
-        font-size: 1.4rem; border: 1px solid #ddd;
+    .btn-edit,
+    .btn-delete {
+        background: #f8f9fa;
+        padding: 12px 25px;
+        border-radius: 8px;
+        font-size: 1.4rem;
+        border: 1px solid #ddd;
     }
 }
 
 /* Version Bureau */
 @media (min-width: 769px) {
-    th { padding: 12px; background: #f8f9fa; border-bottom: 2px solid #eee; text-align: left; }
-    td { padding: 12px; border-bottom: 1px solid #eee; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    th {
+        padding: 12px;
+        background: #f8f9fa;
+        border-bottom: 2px solid #eee;
+        text-align: left;
+    }
+
+    td {
+        padding: 12px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
 }
 
 /* BOUTONS GENERAUX */
-.btn-save { background: #25D366; color: white; border: none; padding: 16px; border-radius: 10px; font-weight: 800; width: 100%; cursor: pointer; text-transform: uppercase; }
-.status-badge { background: #3498db; color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; }
+.btn-save {
+    background: #25D366;
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 10px;
+    font-weight: 800;
+    width: 100%;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.status-badge {
+    background: #3498db;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
 .toggle-pass {
     background: none;
     border: none;
