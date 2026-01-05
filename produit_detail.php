@@ -2,13 +2,14 @@
 include 'includes/db.php'; 
 include 'includes/header.php'; 
 
+// 1. Récupération du produit
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $stmt = $pdo->prepare("SELECT * FROM produits WHERE id = ?");
 $stmt->execute([$id]);
 $p = $stmt->fetch();
 
 if (!$p) { 
-    echo "<div class='container not-found'><h2>Produit introuvable.</h2></div>"; 
+    echo "<div class='container' style='padding:50px; text-align:center;'><h2>Produit introuvable.</h2><a href='index.php'>Retour à l'accueil</a></div>"; 
     include 'includes/footer.php'; exit; 
 }
 ?>
@@ -21,8 +22,8 @@ if (!$p) {
                 <img src="<?= htmlspecialchars($p['image_url']) ?>" id="view-target" class="main-img">
             </div>
 
-            <div class="thumb-list">                <?php 
-                // On liste les 5 colonnes d'images possibles
+            <div class="thumb-list">
+                <?php 
                 $colonnes = ['image_url', 'image_url2', 'image_url3', 'image_url4', 'image_url5'];
                 foreach($colonnes as $col): 
                     if(!empty($p[$col])): ?>
@@ -37,7 +38,7 @@ if (!$p) {
         <div class="product-info">
             <span class="badge-shipping">Livraison Gratuite</span>
             <h1 class="product-title"><?= htmlspecialchars($p['nom']) ?></h1>
-            <p class="price-big"><?= number_format($p['prix'], 0) ?> FGn</p>
+            <p class="price-big"><?= number_format($p['prix'], 0, ',', ' ') ?> FGn</p>
             
             <div class="product-details">
                 <h3>Détails du produit</h3>
@@ -46,45 +47,64 @@ if (!$p) {
 
             <div class="order-box">
                 <h3>Commander ce produit</h3>
-                <form onsubmit="event.preventDefault(); sendOrder();">
-                    <input type="text" id="nom_client" placeholder="Votre Nom et Prénom" required>
-                    <input type="text" id="adresse_client" placeholder="Ville / Quartier de livraison" required>
+                
+                <form action="Traitement_achat.php" method="POST" id="orderForm">
+                    <input type="hidden" name="id_produit" value="<?= $p['id'] ?>">
+                    
+                    <div class="form-group">
+                        <label for="nom_client">Nom complet</label>
+                        <input type="text" name="nom_client" id="nom_client" placeholder="Ex: Mamadou Diallo" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adresse">Adresse de livraison</label>
+                        <input type="text" name="adresse" id="adresse" placeholder="Ville / Quartier" required>
+                    </div>
                     
                     <button type="submit" class="btn-whatsapp">
-                         Commander sur WhatsApp
+                         🛒 CONFIRMER LA COMMANDE
                     </button>
                 </form>
-                <p class="order-note">Paiement Cash à la livraison</p>
+                <p class="order-note">Paiement Cash à la livraison. Une fenêtre WhatsApp s'ouvrira après confirmation.</p>
             </div>
         </div>
     </div>
 </div>
 
 <script>
+    // Changer l'image principale au clic sur une miniature
     function updateView(src) {
         document.getElementById('view-target').src = src;
     }
 
-    function sendOrder() {
+    // Gérer l'envoi WhatsApp ET l'envoi Database
+    document.getElementById('orderForm').addEventListener('submit', function(e) {
         const nom = document.getElementById('nom_client').value;
-        const adresse = document.getElementById('adresse_client').value;
+        const adresse = document.getElementById('adresse').value;
         const produit = "<?= addslashes($p['nom']) ?>";
-        const prix = "<?= $p['prix'] ?> FGn";
+        const prix = "<?= number_format($p['prix'], 0, ',', ' ') ?> FGn";
 
-        const message = `Bonjour ! Je souhaite commander :
-    📦 *Produit :* ${produit}
-    💰 *Prix :* ${prix}
-    🚚 *Livraison :* GRATUITE
-    --------------------------
-    👤 *Client :* ${nom}
-    📍 *Adresse :* ${adresse}
-    --------------------------
-    _Paiement à la réception._`;
+        // 1. Préparer le message WhatsApp
+        const message = `Bonjour Menma Shop ! Je commande :
+📦 *Produit :* ${produit}
+💰 *Prix :* ${prix}
+🚚 *Livraison :* GRATUITE
+--------------------------
+👤 *Client :* ${nom}
+📍 *Adresse :* ${adresse}
+--------------------------
+_Je paierai à la réception._`;
 
-        window.open(`https://wa.me/224625968097?text=${encodeURIComponent(message)}`, '_blank');
-    }
+        // 2. Ouvrir WhatsApp dans un nouvel onglet
+        const whatsappUrl = `https://wa.me/224625968097?text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
+
+        // 3. Laisser le formulaire s'envoyer normalement vers Traitement_achat.php
+        // Le PHP s'occupera de la base de données et de la réduction de stock.
+    });
 </script>
-</div> <div class="container">
+
+<div class="container">
     <?php include 'includes/section_commentaire.php'; ?>
 </div>
 
