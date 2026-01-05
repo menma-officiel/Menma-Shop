@@ -1,15 +1,12 @@
-const CACHE_NAME = 'menma-shop-v1';
+const CACHE_NAME = 'menma-admin-v1';
 const PRECACHE_URLS = [
-  '/',
-  '/index.php',
   '/admin/index.php',
   '/admin/login.php',
   '/admin/stats.php',
-  '/assets/css/style.css',
+  '/admin/offline.html',
   '/assets/css/admin.css',
   '/assets/css/login.css',
-  '/assets/js/login.js',
-  '/offline.html'
+  '/assets/js/login.js'
 ];
 
 self.addEventListener('install', event => {
@@ -32,17 +29,19 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
 
+  // Only handle requests inside /admin/ scope
+  const url = new URL(event.request.url);
+  if (!url.pathname.startsWith('/admin/') && !url.pathname.startsWith('/assets/')) return;
+
   event.respondWith(
     caches.match(event.request).then(cached => {
       if (cached) return cached;
       return fetch(event.request).then(response => {
-        // Put a copy in cache
         return caches.open(CACHE_NAME).then(cache => {
-          // clone response because response is a stream
           cache.put(event.request, response.clone());
           return response;
         });
-      }).catch(() => caches.match('/offline.html'));
+      }).catch(() => caches.match('/admin/offline.html'));
     })
   );
 });

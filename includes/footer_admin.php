@@ -6,9 +6,9 @@
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(function(reg) { console.log('ServiceWorker registered', reg); })
-      .catch(function(err) { console.warn('ServiceWorker registration failed', err); });
+    navigator.serviceWorker.register('/admin/service-worker.js', { scope: '/admin/' })
+      .then(function(reg) { console.log('Admin ServiceWorker registered', reg); })
+      .catch(function(err) { console.warn('Admin ServiceWorker registration failed', err); });
   });
 }
 </script>
