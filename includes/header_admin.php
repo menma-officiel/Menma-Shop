@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/admin.css">
     <link rel="manifest" href="/admin/manifest.json">
+    <link rel="apple-touch-icon" href="/assets/icons/admin-192.png">
     <meta name="theme-color" content="#2b6cb0">
 </head>
 <body>
