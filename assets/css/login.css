@@ -72,3 +72,11 @@ table { width: 100%; border-collapse: collapse; }
 /* BOUTONS GENERAUX */
 .btn-save { background: #25D366; color: white; border: none; padding: 16px; border-radius: 10px; font-weight: 800; width: 100%; cursor: pointer; text-transform: uppercase; }
 .status-badge { background: #3498db; color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; }
+.toggle-pass {
+    background: none;
+    border: none;
+    color: #25D366;
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-weight: bold;
+}
