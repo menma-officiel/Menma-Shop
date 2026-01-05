@@ -15,13 +15,11 @@ include __DIR__ . '/../includes/header_admin.php';
     </div>
 
     <?php
-    // Correction de la requête SQL pour correspondre à ta base (produit_id)
+    // Résumé rapide des statistiques
     $totalProducts = (int) $pdo->query("SELECT COUNT(*) FROM produits")->fetchColumn();
     $totalOrders = (int) $pdo->query("SELECT COUNT(*) FROM commandes")->fetchColumn();
     $totalComments = (int) $pdo->query("SELECT COUNT(*) FROM commentaires")->fetchColumn();
-    
-    // Jointure corrigée : produit_id au lieu de id_produit
-    $revenue = (float) $pdo->query("SELECT COALESCE(SUM(p.prix),0) FROM commandes c JOIN produits p ON c.produit_id = p.id")->fetchColumn();
+    $revenue = (float) $pdo->query("SELECT COALESCE(SUM(p.prix),0) FROM commandes c JOIN produits p ON c.id_produit = p.id")->fetchColumn();
     ?>
 
     <div class="stats-grid mt-20">
@@ -39,7 +37,7 @@ include __DIR__ . '/../includes/header_admin.php';
         </div>
         <div class="stat-card">
             <h4 class="stat-title">Chiffre d'affaires</h4>
-            <p class="stat-value stat-green"><?php echo number_format($revenue, 0, ',', ' '); ?> FGn</p>
+            <p class="stat-value stat-green"><?php echo number_format($revenue, 0); ?> FGn</p>
         </div>
     </div>
 
@@ -57,30 +55,21 @@ include __DIR__ . '/../includes/header_admin.php';
                 </thead>
                 <tbody>
                     <?php
-                    // Utilisation de FETCH_ASSOC pour garantir la lecture sur Supabase
-                    $query = $pdo->query("SELECT * FROM produits ORDER BY id DESC");
-                    $produits = $query->fetchAll(PDO::FETCH_ASSOC);
-
-                    if ($produits):
-                        foreach($produits as $prod): 
-                            // On garde tes noms mais on ajoute une sécurité pour la casse PostgreSQL
-                            $nom = $prod['nom'] ?? $prod['Nom'] ?? 'Sans nom';
-                            $prix = $prod['prix'] ?? $prod['Prix'] ?? 0;
-                            $stock = $prod['stock'] ?? $prod['Stock'] ?? 0;
+                    $produits = $pdo->query("SELECT * FROM produits ORDER BY id DESC")->fetchAll();
+                    foreach($produits as $prod): 
+                        // SECURITÉ : On vérifie si le nom existe avant de l'afficher
+                        $nom = isset($prod['nom']) ? $prod['nom'] : 'Sans nom';
                     ?>
                     <tr>
-                        <td><strong><?php echo htmlspecialchars($nom); ?></strong></td>
-                        <td class="price text-center"><strong><?php echo number_format($prix, 0, ',', ' '); ?> FGn</strong></td>
-                        <td class="text-center"><?php echo $stock; ?></td>
+                        <td><strong><?php echo $nom; ?></strong></td>
+                        <td class="price"><strong><?php echo number_format($prod['prix'], 0); ?> FGn</strong></td>
+                        <td class="text-center"><?php echo $prod['stock']; ?></td>
                         <td class="text-right">
                             <a href="edit_product.php?id=<?php echo $prod['id']; ?>" class="btn-edit"><i class="fas fa-edit"></i></a>
                             <a href="delete_product.php?id=<?php echo $prod['id']; ?>" class="btn-delete" onclick="return confirm('Supprimer ?')"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
-                    <?php endforeach; 
-                    else: ?>
-                        <tr><td colspan="4" class="text-center">Aucun produit trouvé.</td></tr>
-                    <?php endif; ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
@@ -99,15 +88,15 @@ include __DIR__ . '/../includes/header_admin.php';
                 </thead>
                 <tbody>
                     <?php
-                    $commandes = $pdo->query("SELECT * FROM commandes ORDER BY id DESC LIMIT 10")->fetchAll(PDO::FETCH_ASSOC);
+                    $commandes = $pdo->query("SELECT * FROM commandes ORDER BY id DESC LIMIT 10")->fetchAll();
                     foreach($commandes as $com): 
-                        $client = $com['nom_client'] ?? $com['Nom_client'] ?? 'Anonyme';
-                        $statut = $com['statut'] ?? $com['Statut'] ?? 'En attente';
+                        // SECURITÉ : On vérifie si le client existe
+                        $client = isset($com['nom_client']) ? $com['nom_client'] : 'Anonyme';
                     ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($client); ?></td>
+                        <td><?php echo $client; ?></td>
                         <td class="text-center">
-                            <span class="status-badge"><?php echo htmlspecialchars($statut); ?></span>
+                            <span class="status-badge"><?php echo $com['statut_livraison']; ?></span>
                         </td>
                         <td class="text-right">
                             <select onchange="window.location.href='update_livraison.php?id=<?php echo $com['id']; ?>&statut='+this.value">
