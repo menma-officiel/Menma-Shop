@@ -2,28 +2,55 @@
 session_start();
 if (!isset($_SESSION['admin_loge'])) { header("Location: login.php"); exit(); }
 include '../includes/db.php'; 
-include '/header_admin.php'; 
+include __DIR__ . '/../includes/header_admin.php'; 
 ?>
 
 <div class="edit-container">
     
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-        <h2 style="margin:0;">Tableau de Bord</h2>
-        <a href="add_product.php" class="btn-save" style="margin:0; padding: 10px 20px; text-decoration:none; font-size:0.9rem; width:auto; display: block;">
+    <div class="dashboard-header">
+        <h2>Tableau de Bord</h2>
+        <a href="add_product.php" class="btn-save btn-new-product">
             <i class="fas fa-plus"></i> Nouveau Produit
         </a>
     </div>
 
+    <?php
+    // Résumé rapide des statistiques
+    $totalProducts = (int) $pdo->query("SELECT COUNT(*) FROM produits")->fetchColumn();
+    $totalOrders = (int) $pdo->query("SELECT COUNT(*) FROM commandes")->fetchColumn();
+    $totalComments = (int) $pdo->query("SELECT COUNT(*) FROM commentaires")->fetchColumn();
+    $revenue = (float) $pdo->query("SELECT COALESCE(SUM(p.prix),0) FROM commandes c JOIN produits p ON c.id_produit = p.id")->fetchColumn();
+    ?>
+
+    <div class="stats-grid mt-20">
+        <div class="stat-card">
+            <h4 class="stat-title">Produits</h4>
+            <p class="stat-value"><?php echo $totalProducts; ?></p>
+        </div>
+        <div class="stat-card">
+            <h4 class="stat-title">Commandes</h4>
+            <p class="stat-value"><?php echo $totalOrders; ?></p>
+        </div>
+        <div class="stat-card">
+            <h4 class="stat-title">Commentaires</h4>
+            <p class="stat-value"><?php echo $totalComments; ?></p>
+        </div>
+        <div class="stat-card">
+            <h4 class="stat-title">Chiffre d'affaires</h4>
+            <p class="stat-value stat-green"><?php echo number_format($revenue, 2); ?> FGn</p>
+        </div>
+    </div>
+
     <div class="admin-card">
-        <h3 style="margin-bottom:20px; color:#2c3e50;"><i class="fas fa-boxes"></i> Stocks</h3>
-        <div style="overflow-x: auto;">
-            <table style="width: 100%; border-collapse: collapse;">
+        <h3><i class="fas fa-boxes"></i> Stocks</h3>
+        <div class="table-responsive">
+            <table>
                 <thead>
-                    <tr style="background: #f8f9fa; border-bottom: 2px solid #eee;">
-                        <th style="padding: 12px; text-align: left;">Nom</th>
-                        <th style="padding: 12px; text-align: center;">Prix</th>
-                        <th style="padding: 12px; text-align: center;">Stock</th>
-                        <th style="padding: 12px; text-align: right;">Action</th>
+                    <tr class="table-head">
+                        <th>Nom</th>
+                        <th class="text-center">Prix</th>
+                        <th class="text-center">Stock</th>
+                        <th class="text-right">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,13 +60,13 @@ include '/header_admin.php';
                         // SECURITÉ : On vérifie si le nom existe avant de l'afficher
                         $nom = isset($prod['nom']) ? $prod['nom'] : 'Sans nom';
                     ?>
-                    <tr style="border-bottom: 1px solid #eee;">
-                        <td style="padding: 12px;"><strong><?php echo $nom; ?></strong></td>
-                        <td style="padding: 12px; text-align: center; color: #2ecc71;"><strong><?php echo $prod['prix']; ?></strong></td>
-                        <td style="padding: 12px; text-align: center;"><?php echo $prod['stock']; ?></td>
-                        <td style="padding: 12px; text-align: right;">
-                            <a href="edit_product.php?id=<?php echo $prod['id']; ?>" style="color: #f39c12; margin-right:10px;"><i class="fas fa-edit"></i></a>
-                            <a href="delete_product.php?id=<?php echo $prod['id']; ?>" style="color: #e74c3c;" onclick="return confirm('Supprimer ?')"><i class="fas fa-trash"></i></a>
+                    <tr>
+                        <td><strong><?php echo $nom; ?></strong></td>
+                        <td class="price"><strong><?php echo $prod['prix']; ?></strong></td>
+                        <td class="text-center"><?php echo $prod['stock']; ?></td>
+                        <td class="text-right">
+                            <a href="edit_product.php?id=<?php echo $prod['id']; ?>" class="btn-edit"><i class="fas fa-edit"></i></a>
+                            <a href="delete_product.php?id=<?php echo $prod['id']; ?>" class="btn-delete" onclick="return confirm('Supprimer ?')"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
                     <?php endforeach; ?>
@@ -48,15 +75,15 @@ include '/header_admin.php';
         </div>
     </div>
 
-    <div class="admin-card" style="margin-top: 40px;">
-        <h3 style="margin-bottom:20px; color:#2c3e50;"><i class="fas fa-truck"></i> Commandes</h3>
-        <div style="overflow-x: auto;">
-            <table style="width: 100%; border-collapse: collapse;">
+    <div class="admin-card mt-40">
+        <h3><i class="fas fa-truck"></i> Commandes</h3>
+        <div class="table-responsive">
+            <table>
                 <thead>
-                    <tr style="background: #f8f9fa; border-bottom: 2px solid #eee;">
-                        <th style="padding: 12px; text-align: left;">Client</th>
-                        <th style="padding: 12px; text-align: center;">Statut</th>
-                        <th style="padding: 12px; text-align: right;">Modifier</th>
+                    <tr class="table-head">
+                        <th>Client</th>
+                        <th class="text-center">Statut</th>
+                        <th class="text-right">Modifier</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -66,14 +93,12 @@ include '/header_admin.php';
                         // SECURITÉ : On vérifie si le client existe
                         $client = isset($com['nom_client']) ? $com['nom_client'] : 'Anonyme';
                     ?>
-                    <tr style="border-bottom: 1px solid #eee;">
-                        <td style="padding: 12px;"><?php echo $client; ?></td>
-                        <td style="padding: 12px; text-align: center;">
-                            <span style="background:#3498db; color:white; padding:3px 8px; border-radius:4px; font-size:11px;">
-                                <?php echo $com['statut_livraison']; ?>
-                            </span>
+                    <tr>
+                        <td><?php echo $client; ?></td>
+                        <td class="text-center">
+                            <span class="status-badge"><?php echo $com['statut_livraison']; ?></span>
                         </td>
-                        <td style="padding: 12px; text-align: right;">
+                        <td class="text-right">
                             <select onchange="window.location.href='update_livraison.php?id=<?php echo $com['id']; ?>&statut='+this.value">
                                 <option value="">---</option>
                                 <option value="En attente">Attente</option>
@@ -89,4 +114,4 @@ include '/header_admin.php';
     </div>
 </div>
 
-<?php include './footer_admin.php'; ?>
+<?php include __DIR__ . '/../includes/footer_admin.php'; ?>

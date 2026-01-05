@@ -46,7 +46,7 @@ $query->execute();
                     <p class="shipping-info">✅ Livraison Gratuite</p>
                     
                     <div class="product-footer">
-                        <a href="produit_detail.php?id=<?= $p['id'] ?>" class="btn-view" style="width: 100%; text-align: center;">Commander</a>
+                        <a href="produit_detail.php?id=<?= $p['id'] ?>" class="btn-view">Commander</a>
                     </div>
                 </div>
             </div>

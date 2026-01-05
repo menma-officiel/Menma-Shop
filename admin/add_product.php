@@ -1,7 +1,7 @@
 <?php 
 // On remonte d'un dossier pour trouver db.php et header.php
 include '../includes/db.php'; 
-include '/header_admin.php'; 
+include __DIR__ . '/../includes/header_admin.php';  
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nom = htmlspecialchars($_POST['nom']);
@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ins = $pdo->prepare("INSERT INTO produits (nom, prix, stock, description) VALUES (?, ?, ?, ?)");
     $ins->execute([$nom, $prix, $stock, $desc]);
     
-    echo "<p style='color:green'>Produit ajouté avec succès !</p>";
+    echo "<p class='success-message'>Produit ajouté avec succès !</p>";
 }
 ?>
 

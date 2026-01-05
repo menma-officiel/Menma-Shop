@@ -36,3 +36,13 @@ CREATE TABLE IF NOT EXISTS commandes (
 -- Indexes d'exemple
 CREATE INDEX IF NOT EXISTS idx_commentaires_id_produit ON commentaires(id_produit);
 CREATE INDEX IF NOT EXISTS idx_commandes_id_produit ON commandes(id_produit);
+
+-- Table des administrateurs pour la gestion des accès
+CREATE TABLE IF NOT EXISTS admins (
+    id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    username varchar(100) NOT NULL UNIQUE,
+    password_hash varchar(255) NOT NULL,
+    failed_attempts integer NOT NULL DEFAULT 0,
+    last_failed_at timestamp with time zone,
+    created_at timestamp with time zone DEFAULT now()
+);

@@ -7,7 +7,7 @@ if (!isset($_SESSION['admin_loge'])) {
 }
 
 include '../includes/db.php';
-include '/header_admin.php';
+include __DIR__ . '/../includes/header_admin.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nom = $_POST['nom'];
@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <div class="media-section">
             <h3>🖼️ Galerie de Photos (URLs)</h3>
-            <p style="font-size: 0.8rem; color: #666; margin-bottom: 15px;">Collez les liens directs de vos images hébergées.</p>
+            <p class="muted">Collez les liens directs de vos images hébergées.</p>
             
             <div class="image-inputs-grid">
                 <div class="form-group">
@@ -90,17 +90,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
 
-            <div class="form-group" style="margin-top: 15px;">
-                <label style="color: #e74c3c;">Lien Vidéo</label>
+            <div class="form-group mt-15">
+                <label class="text-danger">Lien Vidéo</label>
                 <input type="text" name="video_url" placeholder="https://www.youtube.com/watch?v=...">
             </div>
         </div>
 
-        <div style="display: flex; gap: 15px; margin-top: 20px;">
-            <button type="submit" class="btn-save" style="flex: 2;">PUBLIER LE PRODUIT</button>
-            <a href="index.php" class="btn-cancel" style="flex: 1; text-decoration: none; display: flex; align-items: center; justify-content: center; background: #95a5a6; color: white; border-radius: 8px; font-weight: bold;">ANNULER</a>
+        <div class="actions-row">
+            <button type="submit" class="btn-save flex-2">PUBLIER LE PRODUIT</button>
+            <a href="index.php" class="btn-cancel flex-1">ANNULER</a>
         </div>
     </form>
 </div>
 
-<?php include '../includes/footer_admin.php'; ?>
+<?php include __DIR__ . '/../includes/footer_admin.php'; ?>

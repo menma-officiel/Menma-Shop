@@ -10,7 +10,7 @@ $root = "/boutique/";
     <link rel="stylesheet" href="<?php echo $root; ?>assets/css/style.css">
 </head>
 <body>
-    <nav style="background: #2c3e50;"> <div class="logo">📱 Menma Shop</div>
+    <nav> <div class="logo">📱 Menma Shop</div>
         <ul>
             <li><a href="<?php echo $root; ?>index.php">Accueil</a></li>
             </ul>

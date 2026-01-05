@@ -22,4 +22,10 @@ Ce dépôt contient une petite boutique PHP. Cette configuration prépare le pro
 
 - `includes/db.php` utilise désormais les variables d'environnement et supporte `pgsql` et `mysql`.
 - L'image Docker installe `pdo_pgsql` pour communiquer avec PostgreSQL.
+- Une table `admins` a été ajoutée dans `db/init_postgres.sql` pour l'authentification administrateur (username + mot de passe haché).
+- Pour créer un administrateur, exécuter (dans le conteneur ou local) :
+
+  php admin/create_admin.php <username> <password>
+
+  Le mot de passe sera haché automatiquement.
 

@@ -1,0 +1,63 @@
+/* Styles pour la page admin/login.php */
+.login-page-body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #2c3e50, #000000);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 30px;
+}
+
+.login-card {
+    background: rgba(23, 34, 57, 0.65);
+    backdrop-filter: blur(8px);
+    padding: 36px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+}
+
+.login-card h2 { margin-bottom: 18px; font-weight: 400; letter-spacing: 1px; }
+
+.field { margin: 12px 0; text-align: left; }
+label { display: block; color: rgba(255,255,255,0.85); margin-bottom: 6px; font-size: 0.9rem; }
+
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #222;
+    outline: none;
+    font-size: 0.95rem;
+}
+
+button.login-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #e74c3c;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-top: 8px;
+}
+
+button.login-btn:hover { background: #c0392b; transform: translateY(-1px); }
+
+.error { color: #ffb3b3; font-size: 0.95rem; margin-top: 14px; }
+.back-home { margin-top: 18px; display: block; color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.85rem; }
+
+/* petit utilitaire pour message de validation côté client */
+.input-error {
+    border: 1px solid #ffb3b3 !important;
+    box-shadow: 0 0 0 3px rgba(255, 179, 179, 0.08);
+}
