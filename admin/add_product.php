@@ -1,32 +1,94 @@
-<?php 
+<?php
 session_start();
-if (!isset($_SESSION['admin_loge'])) { header("Location: login.php"); exit(); }
 
-// On remonte d'un dossier pour trouver db.php et header.php
-include '../includes/db.php'; 
-include __DIR__ . '/../includes/header_admin.php';  
+// 1. Vérification de sécurité
+if (!isset($_SESSION['admin_loge'])) {
+    header("Location: login.php");
+    exit;
+}
 
+// 2. Inclusion de la DB
+include '../includes/db.php';
+include __DIR__ . '/../includes/header_admin.php';
+
+// 3. TRAITEMENT DU FORMULAIRE
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nom = htmlspecialchars($_POST['nom']);
-    // Arrondir le prix à l'entier (FGn n'utilise pas de décimales)
+    $nom = $_POST['nom'];
     $prix = (int) round(floatval($_POST['prix']));
     $stock = (int) $_POST['stock'];
-    $desc = htmlspecialchars($_POST['description']);
+    $desc = $_POST['description'];
+    $img1 = $_POST['image_url'];
+    $img2 = !empty($_POST['image_url2']) ? $_POST['image_url2'] : null;
+    $img3 = !empty($_POST['image_url3']) ? $_POST['image_url3'] : null;
+    $img4 = !empty($_POST['image_url4']) ? $_POST['image_url4'] : null;
+    $img5 = !empty($_POST['image_url5']) ? $_POST['image_url5'] : null;
+    $video = !empty($_POST['video_url']) ? $_POST['video_url'] : null;
 
-    $ins = $pdo->prepare("INSERT INTO produits (nom, prix, stock, description) VALUES (?, ?, ?, ?)");
-    $ins->execute([$nom, $prix, $stock, $desc]);
+    // Requête SQL d'insertion
+    $sql = "INSERT INTO produits (nom, prix, stock, description, image_url, image_url2, image_url3, image_url4, image_url5, video_url) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $pdo->prepare($sql);
     
-    echo "<p class='success-message'>Produit ajouté avec succès !</p>";
+    try {
+        $stmt->execute([$nom, $prix, $stock, $desc, $img1, $img2, $img3, $img4, $img5, $video]);
+        echo "<div class='success-message' style='background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin-bottom: 20px;'>Produit ajouté avec succès !</div>";
+    } catch (PDOException $e) {
+        echo "<div class='error-message' style='background: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin-bottom: 20px;'>Erreur : " . $e->getMessage() . "</div>";
+    }
 }
 ?>
 
-<h2>Ajouter un nouveau produit</h2>
-<form method="POST" class="admin-form">
-    <input type="text" name="nom" placeholder="Nom du produit" required><br>
-    <input type="number" step="1" name="prix" placeholder="0" required><br>
-    <input type="number" name="stock" placeholder="Quantité en stock" required><br>
-    <textarea name="description" placeholder="Description du produit"></textarea><br>
-    <button type="submit" class="btn-save">Enregistrer le produit</button>
-</form>
+<div class="edit-container">
+    <h2>➕ Ajouter un Nouveau Produit</h2>
+    <form method="POST" class="admin-form">
+        <div class="form-group">
+            <label>Nom du produit</label>
+            <input type="text" name="nom" placeholder="Ex: iPhone 15 Pro Max" required>
+        </div>
 
-<?php include '../includes/footer.php'; ?>
+        <div class="form-group-row">
+            <div>
+                <label>Prix (FGn)</label>
+                <input type="number" step="1" name="prix" placeholder="0" required>
+            </div>
+            <div>
+                <label>Quantité en Stock</label>
+                <input type="number" name="stock" value="10" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Description détaillée</label>
+            <textarea name="description" rows="5" placeholder="Décrivez les caractéristiques du produit..."></textarea>
+        </div>
+
+        <div class="media-section">
+            <h3>🖼️ Galerie de Photos (URLs)</h3>
+            <div class="image-inputs-grid">
+                <div class="form-group">
+                    <label>Image Principale (Obligatoire)</label>
+                    <input type="text" name="image_url" placeholder="https://lien-image-1.jpg" required>
+                </div>
+                <div class="form-group-row">
+                    <div><label>Image 2</label><input type="text" name="image_url2"></div>
+                    <div><label>Image 3</label><input type="text" name="image_url3"></div>
+                </div>
+                <div class="form-group-row">
+                    <div><label>Image 4</label><input type="text" name="image_url4"></div>
+                    <div><label>Image 5</label><input type="text" name="image_url5"></div>
+                </div>
+            </div>
+            <div class="form-group mt-15">
+                <label class="text-danger">Lien Vidéo</label>
+                <input type="text" name="video_url" placeholder="YouTube URL">
+            </div>
+        </div>
+
+        <div class="actions-row">
+            <button type="submit" class="btn-save flex-2">PUBLIER LE PRODUIT</button>
+            <a href="index.php" class="btn-cancel flex-1">ANNULER</a>
+        </div>
+    </form>
+</div>
+
+<?php include __DIR__ . '/../includes/footer_admin.php'; ?>
