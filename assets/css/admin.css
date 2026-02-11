@@ -136,6 +136,12 @@ h2 {
     gap: 20px;
 }
 
+.actions-row {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
 /* ==========================================================================
    4. FORMULAIRES ET BOUTONS
    ========================================================================== */
@@ -187,6 +193,29 @@ h2 {
     background: #219150;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+}
+
+.btn-cancel {
+    background: #e0e0e0;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    transition: 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-cancel:hover {
+    background: #d6d6d6;
+    color: #000;
+    transform: translateY(-2px);
 }
 
 .btn-new-product {
@@ -298,6 +327,38 @@ tr:hover {
 /* ==========================================================================
    6. UTILITIES ET COMPOSANTS
    ========================================================================== */
+.flex-1 {
+    flex: 1;
+}
+
+.flex-2 {
+    flex: 2;
+}
+
+.flex-3 {
+    flex: 3;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.mt-15 {
+    margin-top: 15px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mt-40 {
+    margin-top: 40px;
+}
+
 .stat-card {
     background: white;
     padding: 25px;
@@ -369,15 +430,32 @@ footer {
    ========================================================================== */
 @media (max-width: 768px) {
     .nav-admin {
-        padding: 10px 15px;
-        flex-direction: column;
-        height: auto;
+        padding: 5px 15px;
+        flex-direction: row;
+        /* Garder la row sur mobile */
+        justify-content: space-between;
+        height: 60px;
         gap: 10px;
     }
 
+    .logo {
+        font-size: 1.2rem;
+    }
+
     .menu-admin {
-        width: 100%;
-        justify-content: center;
+        width: auto;
+        gap: 15px;
+    }
+
+    /* Cacher le texte de bienvenue et les liens moins importants sur mobile */
+    .menu-admin .admin-user,
+    .menu-admin a[title="Voir le site public"] {
+        display: none;
+    }
+
+    .menu-admin a {
+        font-size: 1.1rem;
+        padding: 5px;
     }
 
     .dashboard-header {

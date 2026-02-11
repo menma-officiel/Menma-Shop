@@ -30,4 +30,3 @@ try {
     $msg = getenv('APP_ENV') === 'production' ? 'Erreur de connexion à la base de données.' : $e->getMessage();
     die($msg);
 }
-?>

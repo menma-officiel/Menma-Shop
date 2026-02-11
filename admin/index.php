@@ -1,6 +1,12 @@
 <?php 
 session_start();
 if (!isset($_SESSION['admin_loge'])) { header("Location: login.php"); exit(); }
+
+// Empêcher la mise en cache par le navigateur pour l'admin
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
 include '../includes/db.php'; 
 include __DIR__ . '/../includes/header_admin.php'; 
 ?>

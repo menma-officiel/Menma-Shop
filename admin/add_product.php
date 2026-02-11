@@ -1,4 +1,7 @@
 <?php 
+session_start();
+if (!isset($_SESSION['admin_loge'])) { header("Location: login.php"); exit(); }
+
 // On remonte d'un dossier pour trouver db.php et header.php
 include '../includes/db.php'; 
 include __DIR__ . '/../includes/header_admin.php';  
