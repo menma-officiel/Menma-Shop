@@ -46,3 +46,12 @@ CREATE TABLE IF NOT EXISTS admins (
     last_failed_at timestamp with time zone,
     created_at timestamp with time zone DEFAULT now()
 );
+
+-- Active l'extension pgcrypto pour le hachage des mots de passe
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+-- Insertion de l'admin par défaut (Mot de passe: Djil45ll)
+INSERT INTO admins (username, password_hash)
+VALUES ('Djibril', crypt('Djil45ll', gen_salt('bf')))
+ON CONFLICT (username) DO UPDATE 
+SET password_hash = crypt('Djil45ll', gen_salt('bf'));
