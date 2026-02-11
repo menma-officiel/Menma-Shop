@@ -1,4 +1,4 @@
-const CACHE_NAME = 'menma-admin-v3';
+const CACHE_NAME = 'menma-admin-v4';
 const PRECACHE_URLS = [
   '/admin/index.php',
   '/admin/login.php',
