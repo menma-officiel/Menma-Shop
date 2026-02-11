@@ -48,7 +48,7 @@ if (!$p) {
             <div class="order-box">
                 <h3>Commander ce produit</h3>
                 
-                <form action="Traitement_achat.php" method="POST" id="orderForm">
+                <form action="traitement_achat.php" method="POST" id="orderForm">
                     <input type="hidden" name="id_produit" value="<?= $p['id'] ?>">
                     
                     <div class="form-group">
