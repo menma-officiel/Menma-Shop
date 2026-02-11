@@ -15,6 +15,11 @@ if (isset($_SESSION['admin_loge']) && $_SESSION['admin_loge'] === true) {
 $erreur = "";
 $maxAttempts = 5; // nombre max de tentatives
 $lockoutMinutes = 15; // durée du blocage après trop d'échecs (minutes)
+$success_msg = "";
+
+if (isset($_GET['logout'])) {
+    $success_msg = "Vous avez été déconnecté avec succès.";
+}
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = trim($_POST['username'] ?? '');
@@ -92,6 +97,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
             <button type="submit" class="login-btn">Se connecter</button>
         </form>
+        <?php if (!empty($success_msg)): ?>
+            <p class="success" style="color: #2ecc71; background: rgba(46, 204, 113, 0.2); padding: 10px; border-radius: 8px; margin-top: 20px; border: 1px solid #2ecc71;"><?php echo $success_msg; ?></p>
+        <?php endif; ?>
         <?php if ($erreur): ?>
             <p class="error"><?php echo $erreur; ?></p>
         <?php endif; ?>

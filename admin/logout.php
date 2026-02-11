@@ -13,6 +13,6 @@ session_destroy();
 
 // 3. On force la redirection vers login.php
 // L'utilisation de ./ garantit qu'on reste dans le même dossier
-header("Location: ./login.php");
+header("Location: ./login.php?logout=1");
 exit();
 ?>
