@@ -1,206 +1,156 @@
 /* Styles pour la page admin/login.php */
-.login-page-body {
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #2c3e50, #000000);
+:root {
+    --primary-gradient: linear-gradient(135deg, #2c3e50 0%, #000000 100%);
+    --card-bg: rgba(255, 255, 255, 0.1);
+    --input-bg: rgba(255, 255, 255, 0.95);
+    --btn-color: #25D366;
+    --text-white: #ffffff;
+}
+
+body.login-page-body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--primary-gradient);
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    padding: 30px;
+    margin: 0;
+    padding: 20px;
 }
 
 .login-card {
-    background: rgba(23, 34, 57, 0.65);
-    backdrop-filter: blur(8px);
-    padding: 36px;
-    border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     width: 100%;
-    max-width: 420px;
+    max-width: 400px;
     text-align: center;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .login-card h2 {
-    margin-bottom: 18px;
-    font-weight: 400;
-    letter-spacing: 1px;
+    margin-bottom: 30px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    color: var(--text-white);
+    text-transform: uppercase;
+    font-size: 1.8rem;
 }
 
 .field {
-    margin: 12px 0;
+    margin-bottom: 20px;
     text-align: left;
 }
 
 label {
     display: block;
-    color: rgba(255, 255, 255, 0.85);
-    margin-bottom: 6px;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 8px;
     font-size: 0.9rem;
+    font-weight: 500;
 }
 
 input[type="text"],
 input[type="password"] {
     width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.95);
-    color: #222;
+    padding: 14px 16px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    background: var(--input-bg);
+    color: #333;
     outline: none;
-    font-size: 0.95rem;
+    font-size: 1rem;
+    transition: all 0.3s;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: var(--btn-color);
+    box-shadow: 0 0 15px rgba(37, 211, 102, 0.2);
 }
 
 button.login-btn {
     width: 100%;
-    padding: 12px;
+    padding: 15px;
     border: none;
-    border-radius: 8px;
-    background: #e74c3c;
+    border-radius: 10px;
+    background: var(--btn-color);
     color: white;
-    font-weight: bold;
+    font-weight: 700;
+    font-size: 1.1rem;
     cursor: pointer;
-    transition: 0.2s;
-    margin-top: 8px;
+    transition: all 0.3s;
+    margin-top: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 button.login-btn:hover {
-    background: #c0392b;
-    transform: translateY(-1px);
+    background: #1eb954;
+    /* Darker green */
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
 }
 
 .error {
-    color: #ffb3b3;
-    font-size: 0.95rem;
-    margin-top: 14px;
+    background: rgba(231, 76, 60, 0.2);
+    border: 1px solid #e74c3c;
+    color: #ffcccc;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    margin-top: 20px;
 }
 
 .back-home {
-    margin-top: 18px;
-    display: block;
+    margin-top: 25px;
+    display: inline-block;
     color: rgba(255, 255, 255, 0.6);
     text-decoration: none;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
+    transition: color 0.3s;
 }
 
-/* petit utilitaire pour message de validation côté client */
+.back-home:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+/* Utilities */
 .input-error {
-    border: 1px solid #ffb3b3 !important;
-    box-shadow: 0 0 0 3px rgba(255, 179, 179, 0.08);
+    border-color: #e74c3c !important;
+    animation: shake 0.4s;
 }
 
-@media (max-width: 768px) {
-    .nav-admin {
-        flex-direction: row;
-        padding: 10px 15px;
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
     }
 
-    .dashboard-header {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
+    25% {
+        transform: translateX(-5px);
     }
 
-    .btn-new-product {
-        width: 100%;
-        text-align: center;
+    75% {
+        transform: translateX(5px);
     }
-
-    /* Le tableau devient une liste de cartes */
-    thead {
-        display: none;
-    }
-
-    tr {
-        display: block;
-        background: #fff;
-        border: 1px solid #e1e4e8;
-        padding: 10px;
-        margin-bottom: 15px;
-        border-radius: 12px;
-    }
-
-    td {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 12px 5px;
-        border-bottom: 1px solid #f0f0f0;
-        font-size: 0.95rem;
-    }
-
-    td:last-child {
-        border-bottom: none;
-        justify-content: space-around;
-        padding-top: 15px;
-    }
-
-    /* On utilise data-label pour afficher le titre sur mobile */
-    td::before {
-        content: attr(data-label);
-        font-weight: bold;
-        color: #777;
-    }
-
-    /* Boutons d'action géants pour éviter les erreurs de clic */
-    .btn-edit,
-    .btn-delete {
-        background: #f8f9fa;
-        padding: 12px 25px;
-        border-radius: 8px;
-        font-size: 1.4rem;
-        border: 1px solid #ddd;
-    }
-}
-
-/* Version Bureau */
-@media (min-width: 769px) {
-    th {
-        padding: 12px;
-        background: #f8f9fa;
-        border-bottom: 2px solid #eee;
-        text-align: left;
-    }
-
-    td {
-        padding: 12px;
-        border-bottom: 1px solid #eee;
-    }
-
-    .form-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-    }
-}
-
-/* BOUTONS GENERAUX */
-.btn-save {
-    background: #25D366;
-    color: white;
-    border: none;
-    padding: 16px;
-    border-radius: 10px;
-    font-weight: 800;
-    width: 100%;
-    cursor: pointer;
-    text-transform: uppercase;
-}
-
-.status-badge {
-    background: #3498db;
-    color: white;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-}
-
-.toggle-pass {
-    background: none;
-    border: none;
-    color: #25D366;
-    font-size: 0.8rem;
-    cursor: pointer;
-    font-weight: bold;
 }

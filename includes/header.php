@@ -7,9 +7,16 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <nav> <div class="logo">Menma Shop</div>
-        <ul>
-            <li><a href="index.php">Accueil</a></li>
-            </ul>
-    </nav>
+    <header class="main-header">
+        <div class="container nav-container">
+            <a href="index.php" class="logo">Menma <span>Shop</span></a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.php" class="active">Accueil</a></li>
+                    <li><a href="#products">Produits</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
     <main class="container">
